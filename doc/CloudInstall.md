@@ -62,7 +62,7 @@ sudo apt-get clean
 # Reboot
 sudo shotdown -r now
 ```
-再起動するのを待ち、下記を入力する。
+再起動するのを待ち、下記を入力する。VNCサーバーが起動する。最初だけパスワードを決めるように要求される。Read-onlyはnoでよい。
 ```
 # start vnc server
 /opt/TurboVNC/bin/vncserver
