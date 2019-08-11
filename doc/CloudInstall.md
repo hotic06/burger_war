@@ -18,18 +18,22 @@ VPSはGPUが無いのはもちろんのこと、一切のグラフィックチ�
 AWSのGPUつきのVPSにすれば、性能が出せるのかもしれないが、検証できていない。
 
 ## クラウドの選定
-気軽にトライできる環境として、さくらVPS および AWS Lightsailを対象とした。
-AWS ec2についてもほぼ同様であるはずだが、確認していない。
+気軽にトライできる環境として、さくらVPS および AWS Lightsailおよびec2を対象とした。
+
 
 さくらVPSは2週間無料プランがある。
 プランはメモリ4G以上が推奨される。2G以下でも問題無く動作はするが、遅い。
 2週間たつと2ヶ月分が請求されるので注意が必要。安くはない。
 （2019/8/1現在、大阪リージョンはVNCコンソールに問題が生じているため石狩リージョンがおすすめ。ただし大阪リージョンでも下記の説明上は問題無い）
 
-Lightsailの無料プランは最も性能が低いプランのみとなる。動作はするが遅い。
+AWS Lightsailの無料プランは最も性能が低いプランのみとなる。動作はするが遅い。
 Lightsailでも4CPUになると結構高い。Lightsailは月額費用のみなので、注意が必要。
 
-ec2ならば、インスタンスを起動している間だけの請求で、リーズナブルに実現できるはずだが、まだ検証できていない。
+AWS ec2ならば、インスタンスを起動している間だけの請求になる。標準で用意されているUbuntu16.04のマシンイメージを使う。インスタンスタイプはm4.xlargeならばまずまず使える。GPUがついたタイプ(例えばg2.2xlarge)ならば高FPSでGazeboが動作する可能性があるが、このタイプは初期状態ではインスタンス数制限が0に設定されており制限緩和を申請する必要がある。
+
+AWS ec2は標準では容量が足りない場合がある。ec2の管理画面のボリュームからボリューム変更を行う事ができる。
+m4.xlargeの場合、初期設定では8Gbである。20Gbあれば安心だ。
+
 
 ## インストール手順
 ### さくらVPSの場合
@@ -72,8 +76,8 @@ sudo shotdown -r now
 /opt/TurboVNC/bin/vncserver
 ```
 
-#### AWS Lightsailの場合の違い
-AWS LightsailのUbuntuは標準ではSWAPがない。（少なくとも一番安いコースでは）
+#### AWSの場合の違い
+AWSは標準ではSWAPがない。
 なので、メモリ不足しGazeboが動かない。そこで下記のようにスワップ領域を作る。
 これは、いつ実行しても良い。
 
@@ -82,11 +86,10 @@ sudo dd if=/dev/zero of=/var/swapvaol bs=1M count=4096
 sudo mkswap /var/swapvaol
 sudo chmod 600 /var/swapvaol
 sudo swapon /var/swapvaol
-echo '/var/swapvaol swap swap defaults 0 0' >> /etc/fstab
+sudo sh -c "echo /var/swapvaol swap swap defaults 0 0 >> /etc/fstab"
 ```
 
-
-
+ec2の場合、使用しない時はインスタンス停止するようにすると良い。課金が停止される。
 ### ローカルPC側の操作
 次にローカルPC側の準備をする。Windowsを想定する。
 まず下記のソフトウェアをインストールする。
@@ -114,8 +117,8 @@ Tera TermでVPSサーバーにSSHで接続する。(参考 https://ttssh2.osdn.j
 これでデスクトップが表示されるはずである。
 あとは、通常の環境構築と同じ方法でよい。
 
-#### AWS Lightsailの場合の違い
-AWS LightsailはSSHでのログイン方法が、
+#### AWSの場合の違い
+AWSはSSHでのログイン方法が、
 認証鍵を使った方法のみになっている。
 鍵は管理サイトからダウンロードできる。
 (参考 https://dev.classmethod.jp/cloud/aws/aws-beginner-ec2-ssh/)
