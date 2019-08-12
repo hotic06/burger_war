@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Set Window size and positions for RVIZ
+
 DESKTOPWIDTH=`xdpyinfo  | grep -oP 'dimensions:\s+\K\S+' | cut -f 1 -d "x"`
 DESKTOPHEIGHT=`xdpyinfo  | grep -oP 'dimensions:\s+\K\S+' | cut -f 2 -d "x"`
 
