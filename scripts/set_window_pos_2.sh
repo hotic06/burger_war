@@ -5,6 +5,7 @@
 DESKTOPWIDTH=`xdpyinfo  | grep -oP 'dimensions:\s+\K\S+' | cut -f 1 -d "x"`
 DESKTOPHEIGHT=`xdpyinfo  | grep -oP 'dimensions:\s+\K\S+' | cut -f 2 -d "x"`
 
+RVIZSIZE=400
 
 RVIZWIN1=`xdotool search -onlyvisible ".*red.*Rviz"`
 
@@ -15,7 +16,6 @@ xdotool mousemove 377 500
 sleep 0.2
 xdotool click 1
 sleep 0.2
-RVIZSIZE=400
 xdotool windowsize ${RVIZWIN1} ${RVIZSIZE} ${RVIZSIZE}
 xdotool windowmove ${RVIZWIN1} `expr ${DESKTOPWIDTH} - ${RVIZSIZE}` 10
 fi
