@@ -5,7 +5,7 @@ sudo apt-get install -y git
 
 echo "#forkしたgitをダウンロード(環境に合わせて修正する事)"
 cd ~/catkin_ws/src
-git clone https://github.com/gogo5nta/burger_war
+git clone https://github.com/hotic06/burger_war
 
 echo "model path add .bashrc"
 echo "export GAZEBO_MODEL_PATH=$HOME/catkin_ws/src/burger_war/burger_war/models/" >> ~/.bashrc
