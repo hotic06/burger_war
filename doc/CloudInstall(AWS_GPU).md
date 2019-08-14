@@ -193,3 +193,9 @@ bash scripts/sim_with_judge.sh
 ```
 source scripts/sim_with_judge.sh
 ```
+
+## ポイント
+GPUドライバーのインストールは公式説明に沿って行えば問題はないが、xorg.confの設定でBusIDを設定する必要があった。
+
+https://github.com/yuta-imai/ros-ec2-setup/
+にあった先例では、vncserverを起動する前にxinitを実行しているが、今回の検証では無くても動作が変わらなかったので省いた。
