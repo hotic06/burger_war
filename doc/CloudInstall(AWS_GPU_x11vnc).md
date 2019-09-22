@@ -1,4 +1,4 @@
-# AWS EC2でGPU付きのインスタンスでROS開発環境をつくる
+# AWS EC2でGPU付きのインスタンスでROS開発環境をつくる(x11vnc版)
 ## はじめに
 GPU付きインスタンスを作成できるAWSで、快適なROS開発環境が作れるかトライした。
 
@@ -7,6 +7,7 @@ Gazeboで、Realtime Factor 1.0、FPS 30～40程度が動作する環境を構�
 [VirtualGLを使った方法](CloudInstall(AWS_GPU).md)を以前にトライして良好な環境が得られたが、下記の課題があった。
 - Gazeboなどの起動時に`vglrun gazebo`のように`vglrun`を入れる必要があった
 - VirtualGLはOpenGLの機能を全て網羅していない（ただしGazeboとRvizは試した範囲内では問題なかった）
+
 そこで、本稿では別の方法として`x11vnc`を使用する方法にトライした。
 x11vncは仮想デスクトップではなく、実在するモニターにVNCを通してアクセスすするものである。
 AWSにはモニターは無いが、仮想モニターをつくって対応させる。
