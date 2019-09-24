@@ -196,5 +196,16 @@ AWSの場合、標準のユーザー名は「ubuntu」である。パスワー�
 ## ROS環境のインストール
 [README.md](../README.md)と同じ方法でROS環境を入れる。
 
+## Trouble shooting
+### しばらく放置するとブラックアウトする
+スクリーンセーバーが稼働すると不具合が発生する。
+
+左下のメニュー→Preferences→Light Locker Settings
+- Enable light-locker　→　OFFに
+- Screensaver → Xfce Power Managementで管理されているので、Openを押し、「Display」の「Handle display power management」をOFFにし、「Security」の「Automatically lock the session」を「Never」に
+
+### 起動時に「システムプログラムの問題が見つかりました」
+https://www.kwonline.org/memo2/2019/04/02/system-program-problem-detected-message-on-ubuntu/
+
 ## ポイント
 nvidia-xconfigで仮想スクリーンを作成している。
