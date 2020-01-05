@@ -89,7 +89,7 @@ sudo reboot
 ## VNCとスワップ領域の自動起動を設定する。
 ```
 #VNCのパスワードを設定(ubuntu)
-sudo x11vnc -storepasswd ubuntu /etc/x11vnc.pass
+##sudo x11vnc -storepasswd ubuntu /etc/x11vnc.pass #SSH経由なので省く
 
 #ユーザーubuntuのパスワードを設定する(AWSは標準ではパスワード無しなので
 sudo passwd ubuntu
@@ -105,12 +105,14 @@ After=multi-user.target network.target
 
 [Service]
 Restart=always
-ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth /var/run/lightdm/root/:0 -rfbauth /etc/x11vnc.pass -rfbport 5900 -forever -loop -repeat -shared
+ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth /var/run/lightdm/root/:0 -rfbport 5900 -forever -loop -repeat -shared
 
 [Install]
 WantedBy=multi-user.target
 EOF
 
+#VNCのパスワードを設定する場合は下記
+#ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth /var/run/lightdm/root/:0 -rfbauth /etc/x11vnc.pass -rfbport 5900 -forever -loop -repeat -shared
 
 sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
