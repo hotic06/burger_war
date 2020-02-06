@@ -131,9 +131,9 @@ sudo snap install --classic code
 いくつかそのままだと問題になる箇所があるので、設定を行う。
 
 - 設定⇒Setting Brightness & Lock(画面の明るさとロック)
--- Turn screen off when inactive for(次の時間アイドル状態が続けば画面をオフにする): Never(しない)
--- Lock(ロック) : OFF(オフ)
---  Require my password... (サスペンドからの復帰時にパスワードを要求する) : チェックなし
+  - Turn screen off when inactive for(次の時間アイドル状態が続けば画面をオフにする): Never(しない)
+  - Lock(ロック) : OFF(オフ)
+  -  Require my password... (サスペンドからの復帰時にパスワードを要求する) : チェックなし
 - 設定⇒Software & Updates (ソフトウェアとアップデート)⇒Update(アップデート)
--- Automatically check for updates(アップデートの自動確認) : Never(しない)
--- Notify me of a new Ubuntu version(Ubuntuの新バージョンの通知) : Never(しない)
+  - Automatically check for updates(アップデートの自動確認) : Never(しない)
+  - Notify me of a new Ubuntu version(Ubuntuの新バージョンの通知) : Never(しない)
