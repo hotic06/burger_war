@@ -1,0 +1,123 @@
+# AWS EC2でGPU付きのインスタンスでROS開発環境をつくる(x11vnc版)
+## はじめに
+以前に[awsのGPUインスタンスで環境構築を行った](CloudInstall(AWS_GPU_x11vnc).md)際は、古いバージョンのインスタンス「g2.2xlarge」を使用していた。
+
+そこでawsの新しいインスタンス(g4dn.xlarge)を使用した環境構築についてここに記す。
+
+なお、GPU付きインスタンスは起動インスタンス数制限が0(1つも起動出来ない)になっている場合がある。
+その場合、制限の緩和をサポートへ依頼する必要がある。
+EC2のページの左メニュー「制限」の中から「All G instances のオンデマンドを実行中」を選び、vCPU数を4以上に緩和する。
+今回のインスタンスはvCPUを4使うので、vCPU数4とすると１つのインスタンスが起動できるようになる。
+
+OSイメージは標準で準備されたUbuntu16.04を選ぶ。インスタンスタイプでg2.2xlargeを選ぶ。あとはそのままの設定で良いが、ボリュームは変更した方が良い。標準では8GBであるため拡張する。20GB位なら良いだろう。
+
+
+## まずはアップデート
+```
+sudo apt update -y
+sudo apt upgrade -y linux-aws
+
+# grubのUpdateで選択しが表示された場合、 一番上、一番上
+
+sudo reboot
+```
+
+## NVIDIAのドライバーをインストール
+```
+sudo apt-get install -y gcc make linux-headers-$(uname -r)
+
+# https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/install-nvidia-driver.html#nvidia-grid-g4
+# インストール手順の詳細は上記を参照。
+
+curl -o NVIDIA.run https://s3.amazonaws.com/nvidia-gaming/NVIDIA-Linux-x86_64-435.22-grid.run
+chmod +x NVIDIA.run
+sudo ./NVIDIA.run
+
+cat << EOF | sudo tee -a /etc/nvidia/gridd.conf
+vGamingMarketplace=2
+EOF
+
+sudo curl -o /etc/nvidia/GridSwCert.txt "https://s3.amazonaws.com/nvidia-gaming/GridSwCert-Linux.cert"
+
+#busidの確認方法は nvidia-xconfig --query-gpu-info
+sudo nvidia-xconfig -a --virtual=1280x1024 --allow-empty-initial-configuration --enable-all-gpus --busid PCI:0:30:0
+
+
+sudo reboot
+```
+
+## Ubuntuデスクトップと必要なソフトをインストール
+```
+sudo apt install -y ubuntu-desktop
+sudo apt install -y xterm
+sudo apt install -y x11vnc
+
+
+cat << EOF | sudo tee /etc/lightdm/lightdm.conf.d/01_autologin.conf
+[SeatDefaults]
+autologin-user=ubuntu
+autologin-user-timeout=0
+EOF
+
+sudo reboot
+```
+
+## x11vncとスワップ領域の確保を自動起動で行う設定
+```
+cat << EOF | sudo tee /etc/systemd/system/x11vnc.service
+[Unit]
+Description=VNC Server
+After=multi-user.target network.target
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/x11vnc -xkb -noxrecord -noxfixes -noxdamage -display :0 -auth /var/run/lightdm/root/:0 -rfbport 5900 -forever -loop -repeat -shared
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable x11vnc.service
+sudo systemctl start x11vnc.service
+
+
+cat << EOF | sudo tee /etc/systemd/system/swap.service
+[Unit]
+Description=SWAP Enabling
+
+[Service]
+Type=oneshot
+Environment="MNT_PATH=/mnt" "SWAP_FILE=swapvaol" "DISK_DEV=/dev/nvme1n1"
+ExecStartPre=/sbin/wipefs -fa \${DISK_DEV}
+ExecStartPre=/sbin/mkfs -t ext4 \${DISK_DEV}
+ExecStartPre=/bin/mount -t ext4 \${DISK_DEV} \${MNT_PATH}
+ExecStartPre=/bin/sh -c "/usr/bin/fallocate -l 32GB \${MNT_PATH}/\${SWAP_FILE}"
+ExecStartPre=/bin/chmod 600 \${MNT_PATH}/\${SWAP_FILE}
+ExecStartPre=/sbin/mkswap \${MNT_PATH}/\${SWAP_FILE}
+ExecStart=/sbin/swapon \${MNT_PATH}/\${SWAP_FILE}
+ExecStop=/sbin/swapoff -a
+RemainAfterExit=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+sudo systemctl daemon-reload
+sudo systemctl enable swap.service
+sudo systemctl start swap.service
+```
+
+## ROS環境のインストール
+[README.md](../README.md)と同じ方法でROS環境を入れる。
+
+
+## Visual Studio Codeのインストール
+
+# Setting Brightness & Lock -> Turn screen off when inactive for: [Never]
+#                              Lock [OFF],  [uncheck] Require my password...
+# Software & Updates -> Updates -> Automatically check for updates: [Never]
+#                               -> Notify me of a new Ubuntu version: [Never]
+# Language Support -> Install
+#                  ->  日本語
+# 右上のテキスト入力　入力ソース　日本語(Mozoc)(IBus)
