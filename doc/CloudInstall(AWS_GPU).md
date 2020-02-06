@@ -1,3 +1,4 @@
+このドキュメントは記録用に残している古いものです。最新の情報は[CloudInstall(AWS_GPU2_x11vnc).md](CloudInstall(AWS_GPU2_x11vnc).md	)をご確認ください。
 # AWS EC2でGPU付きのインスタンスでROS開発環境をつくる
 ## はじめに
 GPU付きインスタンスを作成できるAWSで、快適なROS開発環境が作れるかトライした。
