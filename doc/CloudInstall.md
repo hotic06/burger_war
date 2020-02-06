@@ -1,3 +1,6 @@
+このドキュメントは記録用に残している古いものです。最新の情報は[CloudInstall(AWS_GPU2_x11vnc).md](CloudInstall(AWS_GPU2_x11vnc).md	)をご確認ください。
+
+
 # クラウド環境でのROS開発環境構築について
 ## はじめに
 クラウド環境におけるROS開発環境というと、AWSのRoboMaker、ROS Development Studioなど、いくつか実装が見られる。
