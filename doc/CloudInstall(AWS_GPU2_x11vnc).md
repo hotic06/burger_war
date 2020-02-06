@@ -11,6 +11,7 @@ EC2のページの左メニュー「制限」の中から「All G instances の�
 
 OSイメージは標準で準備されたUbuntu16.04を選ぶ。インスタンスタイプでg2.2xlargeを選ぶ。あとはそのままの設定で良いが、ボリュームは変更した方が良い。標準では8GBであるため拡張する。20GB位なら良いだろう。
 
+NVIDIAのドライバーインストールは頻繁にバージョンアップがあるので、まずawsのドキュメントを確認してほしい。
 
 ## まずはアップデート
 ```
@@ -137,3 +138,4 @@ sudo snap install --classic code
 - 設定⇒Software & Updates (ソフトウェアとアップデート)⇒Update(アップデート)
   - Automatically check for updates(アップデートの自動確認) : Never(しない)
   - Notify me of a new Ubuntu version(Ubuntuの新バージョンの通知) : Never(しない)
+- 右上の時計⇒時刻と日付の設定⇒Tokyoを選択
