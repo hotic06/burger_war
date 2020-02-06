@@ -113,11 +113,27 @@ sudo systemctl start swap.service
 
 
 ## Visual Studio Codeのインストール
+必要に応じて、Visual Studio Codeをインストールする。
+```
+sudo snap install --classic code
+# code もしくは /snap/bin/code で起動できる
+```
 
-# Setting Brightness & Lock -> Turn screen off when inactive for: [Never]
-#                              Lock [OFF],  [uncheck] Require my password...
-# Software & Updates -> Updates -> Automatically check for updates: [Never]
-#                               -> Notify me of a new Ubuntu version: [Never]
-# Language Support -> Install
-#                  ->  日本語
-# 右上のテキスト入力　入力ソース　日本語(Mozoc)(IBus)
+## Ubuntuデスクトップでの設定
+### 日本語の設定
+必要ならば日本語に設定を変える。
+
+- 設定⇒Language Support⇒Install⇒日本語
+- 右上の「En」⇒テキスト入力設定⇒入力ソースの下の「+」⇒日本語(Mozoc)(IBus)
+- 次のソースへの切り替え（半角全角キーはVNCで動作しないので）ctrl+Spaceを割り当てる
+
+### その他の設定
+いくつかそのままだと問題になる箇所があるので、設定を行う。
+
+- 設定⇒Setting Brightness & Lock(画面の明るさとロック)
+-- Turn screen off when inactive for(次の時間アイドル状態が続けば画面をオフにする): Never(しない)
+-- Lock(ロック) : OFF(オフ)
+--  Require my password... (サスペンドからの復帰時にパスワードを要求する) : チェックなし
+- 設定⇒Software & Updates (ソフトウェアとアップデート)⇒Update(アップデート)
+-- Automatically check for updates(アップデートの自動確認) : Never(しない)
+-- Notify me of a new Ubuntu version(Ubuntuの新バージョンの通知) : Never(しない)
