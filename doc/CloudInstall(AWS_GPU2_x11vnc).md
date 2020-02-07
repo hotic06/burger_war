@@ -28,8 +28,8 @@ sudo reboot
 sudo apt-get install -y gcc make linux-headers-$(uname -r)
 
 # https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/install-nvidia-driver.html#nvidia-grid-g4
-# インストール手順の詳細は上記を参照。
-# 頻繁に変わります。下記で上手いくいかないときは必ず上記を参照ください。
+# インストール手順の詳細は上記を参照。ここではパブリックドライバーをインストールしています。
+# 上記ページの内容は頻繁に変わります。上手いくいかないときは必ず上記を参照ください。
 
 wget http://us.download.nvidia.com/tesla/440.33.01/NVIDIA-Linux-x86_64-440.33.01.run
 chmod +x NVIDIA.run
@@ -152,3 +152,11 @@ sudo snap install --classic code
   - Automatically check for updates(アップデートの自動確認) : Never(しない)
   - Notify me of a new Ubuntu version(Ubuntuの新バージョンの通知) : Never(しない)
 - 右上の時計⇒時刻と日付の設定⇒Tokyoを選択
+
+
+## トラブルシューティング
+### upgradeしたら画面が出ない
+LinuxカーネルやGRUBまわりのupgradeがあると、NVIDIAのドライバーが正常に動作しなくなる場合があります。
+
+上記の[NVIDIAのドライバーをインストール](#NVIDIAのドライバーをインストール)をやり直してみてください。
+awsのドキュメントの更新が無いか必ず確認してください。
