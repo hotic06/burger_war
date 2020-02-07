@@ -32,8 +32,8 @@ sudo apt-get install -y gcc make linux-headers-$(uname -r)
 # 上記ページの内容は頻繁に変わります。上手いくいかないときは必ず上記を参照ください。
 
 wget http://us.download.nvidia.com/tesla/440.33.01/NVIDIA-Linux-x86_64-440.33.01.run
-chmod +x NVIDIA.run
-sudo ./NVIDIA.run
+chmod +x NVIDIA*.run
+sudo ./NVIDIA*.run
 
 # ウィーザードが動く
 # [Continue installation]を押す
