@@ -68,7 +68,7 @@ sudo apt install -y ubuntu-desktop
 sudo apt install -y xterm
 sudo apt install -y x11vnc
 
-
+# 自動ログインを設定する
 cat << EOF | sudo tee /etc/lightdm/lightdm.conf.d/01_autologin.conf
 [SeatDefaults]
 autologin-user=ubuntu
@@ -124,6 +124,14 @@ sudo systemctl enable swap.service
 sudo systemctl start swap.service
 ```
 
+## GPUが有効か確認
+firefoxで[http://webglreport.com/](http://webglreport.com/)を開いて、WebGLがサポートされているか確認する。
+
+コマンドで確認する。Driverのバージョンなど情報が出ればOK。
+```
+nvidia-smi
+```
+
 ## ROS環境のインストール
 [README.md](../README.md)と同じ方法でROS環境を入れる。
 
@@ -139,9 +147,16 @@ sudo snap install --classic code
 ### 日本語の設定
 必要ならば日本語に設定を変える。
 
-- 設定⇒Language Support⇒Install⇒日本語
+ここで、標準ではパスワードが設定されていないので、GUIで設定を変更するときにパスワードが求められてもパスワード認証に失敗してしまうため、パスワード設定をする。
+```
+sudo passwd ubuntu
+```
+
+- 設定⇒Language Support⇒Install⇒Install/Remove Languages⇒Japanese
+  - 日本語をリストの一番上に持ってくる⇒Aplly system-wideをクリック
+  - リブートするとディレクトリ名を日本語にするか聞かれるが古いままにする
 - 右上の「En」⇒テキスト入力設定⇒入力ソースの下の「+」⇒日本語(Mozoc)(IBus)
-- 次のソースへの切り替え（半角全角キーはVNCで動作しないので）ctrl+Spaceを割り当てる
+  - 次のソースへの切り替え（半角全角キーはVNCで動作しないので）ctrl+Spaceを割り当てる
 
 ### その他の設定
 いくつかそのままだと問題になる箇所があるので、設定を行う。
