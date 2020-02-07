@@ -29,20 +29,33 @@ sudo apt-get install -y gcc make linux-headers-$(uname -r)
 
 # https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/install-nvidia-driver.html#nvidia-grid-g4
 # インストール手順の詳細は上記を参照。
+# 頻繁に変わります。下記で上手いくいかないときは必ず上記を参照ください。
 
-curl -o NVIDIA.run https://s3.amazonaws.com/nvidia-gaming/NVIDIA-Linux-x86_64-435.22-grid.run
+wget http://us.download.nvidia.com/tesla/440.33.01/NVIDIA-Linux-x86_64-440.33.01.run
 chmod +x NVIDIA.run
 sudo ./NVIDIA.run
 
-cat << EOF | sudo tee -a /etc/nvidia/gridd.conf
-vGamingMarketplace=2
-EOF
-
-sudo curl -o /etc/nvidia/GridSwCert.txt "https://s3.amazonaws.com/nvidia-gaming/GridSwCert-Linux.cert"
+# ウィーザードが動く
+# [Continue installation]を押す
+# WARNINGがでるがOKを押す
+# 「Would you like to run the nvidia-xconfig～」→Noを押す
 
 #busidの確認方法は nvidia-xconfig --query-gpu-info
 sudo nvidia-xconfig -a --virtual=1280x1024 --allow-empty-initial-configuration --enable-all-gpus --busid PCI:0:30:0
 
+cat << EOF | sudo tee --append /etc/modprobe.d/blacklist.conf
+blacklist vga16fb
+blacklist nouveau
+blacklist rivafb
+blacklist nvidiafb
+blacklist rivatv
+EOF
+
+cat << EOF | sudo tee --append /etc/default/grub
+GRUB_CMDLINE_LINUX="rdblacklist=nouveau"
+EOF
+
+sudo update-grub
 
 sudo reboot
 ```
