@@ -64,9 +64,13 @@ sudo reboot
 
 ## Ubuntuデスクトップと必要なソフトをインストール
 ```
+# Ubuntuデスクトップ環境
 sudo apt install -y ubuntu-desktop
 sudo apt install -y xterm
+# VNCサーバー
 sudo apt install -y x11vnc
+# ブラウザーでVNCを表示するソフト
+sudo snap install novnc
 
 # 自動ログインを設定する
 cat << EOF | sudo tee /etc/lightdm/lightdm.conf.d/01_autologin.conf
@@ -78,8 +82,9 @@ EOF
 sudo reboot
 ```
 
-## x11vncとスワップ領域の確保を自動起動で行う設定
+## x11vncとnovncとスワップ領域の確保を自動起動で行う設定
 ```
+#x11vnc
 cat << EOF | sudo tee /etc/systemd/system/x11vnc.service
 [Unit]
 Description=VNC Server
@@ -97,7 +102,25 @@ sudo systemctl daemon-reload
 sudo systemctl enable x11vnc.service
 sudo systemctl start x11vnc.service
 
+#novnc
+cat << EOF | sudo tee /etc/systemd/system/novnc.service
+[Unit]
+Description=noVNC Server
+After=multi-user.target network.target x11vnc.service
 
+[Service]
+Restart=always
+ExecStart=/snap/bin/novnc --listen 6080 --vnc localhost:5900
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl daemon-reload
+sudo systemctl enable novnc.service
+sudo systemctl start novnc.service
+
+
+#スワップ領域
 cat << EOF | sudo tee /etc/systemd/system/swap.service
 [Unit]
 Description=SWAP Enabling
