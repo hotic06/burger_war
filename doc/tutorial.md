@@ -490,7 +490,7 @@ Commands:
 rqt_graph
 ```
 を起動すると、下記のようなGUIツールが立ち上がります。楕円はノードを現していて、矢印はトピックです。これを見ることで、どのノードとトピックの状況がわかります。
-![rqt_graph](rqt_graph.png)
+![rqt_graph](image/rqt_graph.png)
 たとえば、左端の`/raundomRun`は自分の機体のノードであり、`/cmd_vel`をPublishしており、それを`/gazebo`ノードが受け取っていることが分かります。
 
 #### Rviz
@@ -507,7 +507,7 @@ rviz
 さらに、`Add`を押して、`By topic`タブから`/scan`⇒`LaserScan`を選びます。
 次に、リストの中から、`Global Options`⇒`Fixed Frame`のところへ`base_scan`と入力します。
 すると、右側のエリアにLiDARのデータが表示されます。
-![rviz](rviz.png)
+![rviz](image/rviz.png)
 
 #### rqt
 `rqt`はROS上でGUIツールを開発するフレームワークです。
