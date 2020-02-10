@@ -1,21 +1,16 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="robot_name" default=""/>
+  <arg name="side" default="r"/> <!-- "b" = blue side, "r" = red side  -->
+
     <!-- You can change control program  -->
 
-    <!-- Launch Navigation -->
-    <include file="$(find burger_navigation)/launch/your_burger_navigation_sample.launch">
-        <arg name="robot_name" value="$(arg robot_name)" />
-    </include>
 
-    <!-- my program node -->
-    <node pkg="burger_war" type="navirun.py" name="NaviRunBot" output="screen"> 
-        <param name="robot_name" value="$(arg robot_name)" />
-    </node>
+    <!-- sample program node -->
 
+    <node pkg="burger_war" type="randomRun.py" name="randomRun" output="screen"/>
 
+    <!-- END sample program node -->
 
-    <!-- END my program node -->
 
     <!-- End of your space  -->
 </launch>
