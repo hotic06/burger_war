@@ -22,9 +22,6 @@ import actionlib_msgs
 
 class NaviBot():
     def __init__(self):
-        # bot name 
-        robot_name=rospy.get_param('~robot_name')
-        self.name = robot_name
         
         # velocity publisher
         self.vel_pub = rospy.Publisher('cmd_vel', Twist,queue_size=1)
@@ -37,7 +34,7 @@ class NaviBot():
         self.client.wait_for_server()
 
         goal = MoveBaseGoal()
-        goal.target_pose.header.frame_id = self.name + "/map"
+        goal.target_pose.header.frame_id = "/map"
         goal.target_pose.header.stamp = rospy.Time.now()
         goal.target_pose.pose.position.x = x
         goal.target_pose.pose.position.y = y
