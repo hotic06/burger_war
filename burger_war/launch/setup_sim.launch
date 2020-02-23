@@ -39,6 +39,11 @@
     <param name="side" value="r" />
   </node>
 
+<!-- Odometory Publisher  -->
+<node pkg="burger_war" type="calcodom.py" name="odom_publisher" output="screen">
+  <param name="initial_theta" value="-1.57075" />
+</node>
+
 <!-- enemy burger blue side -->
   <group ns="enemy_bot">
       <!-- spawn the robot -->
