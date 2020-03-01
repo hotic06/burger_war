@@ -12,6 +12,9 @@
   <include file="$(find burger_navigation)/launch/burger_navigation.launch">
   </include>
 
+  <node pkg="burger_war" type="navirun.py" name="NavigationRun" output="screen" >
+  </node>
+
     <!-- END sample program node -->
 
 
