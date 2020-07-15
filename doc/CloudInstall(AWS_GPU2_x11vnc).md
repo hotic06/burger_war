@@ -33,7 +33,7 @@ sudo apt-get install -y gcc make linux-headers-$(uname -r)
 # インストール手順の詳細は上記を参照。ここではパブリックドライバーをインストールしています。
 # 上記ページの内容は頻繁に変わります。上手いくいかないときは必ず上記を参照ください。
 
-wget http://us.download.nvidia.com/tesla/440.33.01/NVIDIA-Linux-x86_64-440.33.01.run
+wget http://us.download.nvidia.com/tesla/450.51.05/NVIDIA-Linux-x86_64-450.51.05.run
 chmod +x NVIDIA*.run
 sudo ./NVIDIA*.run
 
