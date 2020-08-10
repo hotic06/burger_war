@@ -33,7 +33,7 @@ sudo apt-get install -y gcc make linux-headers-$(uname -r)
 # インストール手順の詳細は上記を参照。ここではパブリックドライバーをインストールしています。
 # 上記ページの内容は頻繁に変わります。上手いくいかないときは必ず上記を参照ください。
 
-wget http://us.download.nvidia.com/tesla/450.51.05/NVIDIA-Linux-x86_64-450.51.05.run
+wget http://us.download.nvidia.com/tesla/450.51.06/NVIDIA-Linux-x86_64-450.51.06.run
 chmod +x NVIDIA*.run
 sudo ./NVIDIA*.run
 
@@ -195,14 +195,23 @@ sudo passwd ubuntu
 
 
 ## トラブルシューティング
-### upgradeしたら画面が出ない
-LinuxカーネルやGRUBまわりのupgradeがあると、NVIDIAのドライバーが正常に動作しなくなる場合があります。
+### apt upgradeしたら画面が出ない
+LinuxカーネルやGRUBまわりのupgradeがあると、NVIDIAのドライバーが正常に動作しなくなる場合がある。
+(ほぼ必ず動作しなくなると思ってよい。）
 
-上記の[NVIDIAのドライバーをインストール](#NVIDIAのドライバーをインストール)をやり直してみてください。
-awsのドキュメントの更新が無いか必ず確認してください。
+上記の[NVIDIAのドライバーをインストール](#NVIDIAのドライバーをインストール)をやり直す。
+awsのドキュメントの更新が無いか必ず確認する。
+
+手順としては、下記のとおり。
+1. NVIDIAドライバーの最新版を探してダウンロード
+2. ドライバーインストールを実行
+3. 設定ファイルが正しいか確認（通常はなにもしなくていい）
+- /etc/modprobe.d/blacklist.conf
+- /etc/default/grub
+- /etc/X11/xorg.conf
 
 ### 起動時に「システムプログラムの問題が見つかりました」
-crashログを消すと表示されなくなります。
+crashログを消すと表示されなくなる。
 ```
 sudo rm -rf /var/crash/*
 ```
