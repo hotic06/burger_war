@@ -8,6 +8,7 @@ BLUE_NAME=$2
 # judge
 # run judge server and visualize window
 gnome-terminal -e "python judge/judgeServer.py --mt 180 --et 60"
+sleep 1
 gnome-terminal -e "python judge/visualizeWindow.py"
 
 # init judge server for sim setting

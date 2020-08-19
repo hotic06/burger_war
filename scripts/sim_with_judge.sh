@@ -5,6 +5,7 @@ set -x
 # judge
 # run judge server and visualize window
 gnome-terminal -e "python judge/judgeServer.py"
+sleep 1
 gnome-terminal -e "python judge/visualizeWindow.py"
 
 # init judge server for sim setting
