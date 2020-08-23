@@ -4,7 +4,7 @@
 
 <!-- Your robot control node run  red side-->
   <include file="$(find burger_war)/launch/your_burger.launch">
-    <arg name="side" value="r" />
+    <arg name="side" default="r" />
   </include>
 
 <!-- enemy bot run  blue side-->
