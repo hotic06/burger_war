@@ -10,7 +10,7 @@ while getopts ls: OPT
 do
   case $OPT in
     "l" ) FLG_L="TRUE" ; VALUE_L="$OPTARG" ;;
-    "s" ) FLG_S="TUR"  ; VALUE_SIDE="$OPTARG" ;;
+    "s" ) FLG_S="TRUE"  ; VALUE_SIDE="$OPTARG" ;;
   esac
 done
 
