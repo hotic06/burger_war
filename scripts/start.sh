@@ -6,7 +6,7 @@ VALUE_L="1"
 VALUE_SIDE="r"
 
 # get args level setting
-while getopts ls: OPT
+while getopts l:s: OPT
 do
   case $OPT in
     "l" ) FLG_L="TRUE" ; VALUE_L="$OPTARG" ;;
